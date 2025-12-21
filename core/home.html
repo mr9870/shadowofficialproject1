@@ -1,0 +1,165 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Official Shadow | Secure Repository</title>
+    <style>
+        :root {
+            --neon-green: #00ff41;
+            --bg-dark: #050505;
+            --card-bg: #0a0a0a;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--neon-green);
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        /* Profile Section */
+        .profile-section {
+            padding: 40px 20px;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .shadow-dp {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 3px solid var(--neon-green);
+            box-shadow: 0 0 20px var(--neon-green);
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-shadow: 0 0 10px var(--neon-green);
+            margin: 10px 0;
+            text-transform: uppercase;
+        }
+
+        .bio {
+            color: #888;
+            max-width: 600px;
+            margin: 0 auto 20px auto;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        /* Tools Container */
+        .container {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .tool-card {
+            background: var(--card-bg);
+            border: 2px solid var(--neon-green);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            width: 90%;
+            max-width: 800px;
+            text-align: left;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.1);
+        }
+
+        .tool-header {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #1a1a1a;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .tool-title {
+            font-size: 1.5rem;
+            color: #fff;
+            margin: 0;
+        }
+
+        .tool-description {
+            color: var(--neon-green);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            white-space: pre-wrap; /* Text format maintain karne ke liye */
+        }
+
+        /* Download Button */
+        .btn-download {
+            background-color: var(--neon-green);
+            color: #000;
+            padding: 12px 25px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            display: inline-block;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+
+        .btn-download:hover {
+            background-color: #fff;
+            box-shadow: 0 0 20px #fff;
+        }
+
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            font-size: 0.8rem;
+            color: #444;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="profile-section">
+        {% if profile and profile.profile_pic %}
+            <img src="{{ profile.profile_pic.url }}" class="shadow-dp" alt="Shadow Admin">
+            <h1>{{ profile.name }}</h1>
+            <p class="bio">{{ profile.bio }}</p>
+        {% else %}
+            <img src="{% static 'images/logo.png' %}" class="shadow-dp" alt="Default Logo">
+            <h1>OFFICIAL SHADOW</h1>
+            <p class="bio">Advanced Tools & Script Repository</p>
+        {% endif %}
+    </div>
+
+    <div class="container">
+        {% for tool in tools %}
+        <div class="tool-card">
+            <div class="tool-header">
+                <span style="margin-right: 10px;">🛡️</span>
+                <h3 class="tool-title">{{ tool.title }}</h3>
+            </div>
+            
+            <div class="tool-description">
+                {{ tool.description }}
+            </div>
+
+            {% if tool.file %}
+                <a href="{{ tool.file.url }}" class="btn-download" download>Download Tool</a>
+            {% else %}
+                <p style="color: #444; font-size: 0.8rem;">No file attached to this tool.</p>
+            {% endif %}
+        </div>
+        {% empty %}
+        <p>System status: No tools currently active in the repository.</p>
+        {% endfor %}
+    </div>
+
+    <footer>
+        &copy; 2025 OFFICIAL SHADOW | ALL RIGHTS RESERVED
+    </footer>
+
+</body>
+</html>
